@@ -1,0 +1,61 @@
+#Write a python program to input a students marks in n consecutive tests and store them in a list .Find the longest 
+# consecutive sequence in which each mark is strictly greater  than previous
+# mark.
+# Display The sequence ,its length and its starting and ending test numbers as a tuple. If multiple sequence have the 
+# same maximum length ,display the first one 
+
+# Marks : [55,60,68,62,65,70,78,74]
+# Longest improving sequence : [62,65,70,78]
+# NUmber of tests: 4
+# Text range : (4,7)
+
+# Conditions :
+# Accept at least one test
+# Equal marks break the improving sequence
+# Test numbers begin at 1 
+# Do not sort the list because the original test order matters
+
+n = int(input("Enter number of tests: "))
+
+while n < 1:
+    print("At least one test is required.")
+    n = int(input("Enter number of tests: "))
+
+marks = []
+
+for i in range(n):
+    mark = int(input("Enter marks: "))
+    marks.append(mark)
+
+# Variables for longest sequence
+best_start = 0
+best_end = 0
+
+current_start = 0
+
+for i in range(1, n):
+    if marks[i] > marks[i - 1]:
+        # Sequence is still increasing
+        if i - current_start > best_end - best_start:
+            best_start = current_start
+            best_end = i
+    else:
+        # Increasing sequence is broken
+        current_start = i
+
+        # Single element sequence
+        if best_end == best_start:
+            best_start = i
+            best_end = i
+
+# Get the longest sequence
+sequence = marks[best_start:best_end + 1]
+
+# Test numbers start from 1
+test_range = (best_start + 1, best_end + 1)
+
+print("Marks:", marks)
+print("Longest improving sequence:", sequence)
+print("Number of tests:", len(sequence))
+print("Test range:", test_range)
+
